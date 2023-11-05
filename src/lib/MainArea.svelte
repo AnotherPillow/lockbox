@@ -3,6 +3,11 @@
     import { decrypted, selected_account, stored_key, defaultDecrypted, futureIndex } from "../stores";
     import { blankAccount, capitalise } from "../util";
     
+    let storedKey = ''
+    stored_key.subscribe(value => {
+        storedKey = value
+    })
+    
     import type { accountType } from "../stores"
     
     import { toast } from 'svoast';
@@ -97,11 +102,12 @@
                     {/if}
                 </div>
             {/each}
-            <button class="account-delete-btn" on:click={() => {
+            <button class="account-delete-btn" on:click={async () => {
                 decryptedData.accounts[selectedAccount].title = '@~lb~hidden'
-                setTimeout(() => {
-                    window.location.reload()
-                }, 250)
+                await invoke("write_file", {
+                    key: storedKey,
+                    data: JSON.stringify(decryptedData)
+                })
             }}>Delete</button>
         {/if}
     </div>
