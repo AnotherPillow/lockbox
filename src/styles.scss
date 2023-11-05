@@ -90,11 +90,11 @@ button {
     cursor: pointer;
 
     &:hover {
-        border-color: #396cd8;
+        outline: 3px solid #396cd8;
     }
 
     &:active {
-        border-color: #396cd8;
+        outline: 3px solid #396cd8;
         background-color: #0f0f0f69;
     }
 }

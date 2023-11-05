@@ -43,13 +43,15 @@
         <!--make an UL thats children is bound to the listElems array-->
         <ul id="accounts">
             {#each decryptedData.accounts as acc, index}
-                <li data-account-index={index}>
-                    <button on:click={() => chooseAccount(index)} class="invis-button">
-                        <h4>
-                            {acc.title}
-                        </h4>
-                    </button>
-                </li>
+                {#if acc !== undefined && JSON.stringify(acc) !== '{}' && acc.title !== '@~lb~hidden'}
+                    <li data-account-index={index}>
+                        <button on:click={() => chooseAccount(index)} class="invis-button">
+                            <h4>
+                                {acc.title}
+                            </h4>
+                        </button>
+                    </li>
+                {/if}
             {/each}
         </ul>
     </div>
@@ -95,6 +97,12 @@
                     {/if}
                 </div>
             {/each}
+            <button class="account-delete-btn" on:click={() => {
+                decryptedData.accounts[selectedAccount].title = '@~lb~hidden'
+                setTimeout(() => {
+                    window.location.reload()
+                }, 250)
+            }}>Delete</button>
         {/if}
     </div>
 </div>
@@ -105,6 +113,13 @@
         font-size: 2em;
         width: 100%;
         text-align: center;
+    }
+
+    .account-delete-btn {
+        background-color: darkmagenta;
+        
+        position: absolute;
+        bottom: 15px;
     }
 
     .gridparent {
@@ -147,6 +162,7 @@
 
         .maingridarea {
             grid-area: maingridarea;
+            position: relative;
 
             .account-details-container {
                 display: flex;

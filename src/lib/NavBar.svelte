@@ -44,6 +44,11 @@
 <style lang="scss">
     nav {
         height: 100px;
+
+        button, input {
+            padding-top: 0.5em;
+            padding-bottom: 0.5em;
+        }
         
         ul {
             list-style-type: none;
