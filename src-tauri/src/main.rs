@@ -180,7 +180,7 @@ fn init_database(key: &str) {
     });
     let json_string = serde_json::to_string(&json_data).unwrap();
     // println!("Calling writefile from initialiser...");
-    // println!("{:#?}", write_file(&key, &json_string));
+    write_file(&key, &json_string);
 }
 
 #[tauri::command]
