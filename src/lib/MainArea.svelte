@@ -39,16 +39,19 @@
     async function chooseAccount(index: number) {
         selected_account.set(index)
     }
+
+    let accountQuery = ''
 </script>
 
 <!--make a grid with 1 small column and 2 big ones-->
 <div class="gridparent">
     <div class="column gridlistarea">
+        <input class="invisinput accSearchInput" placeholder="Github..." bind:value={accountQuery} />
         <button class="btn btn-primary" on:click={addnew}>Add</button>
         <!--make an UL thats children is bound to the listElems array-->
         <ul id="accounts">
             {#each decryptedData.accounts as acc, index}
-                {#if acc !== undefined && JSON.stringify(acc) !== '{}' && acc.title !== '@~lb~hidden'}
+                {#if acc !== undefined && JSON.stringify(acc) !== '{}' && acc.title !== '@~lb~hidden' && acc.title.includes(accountQuery)}
                     <li data-account-index={index}>
                         <button on:click={() => chooseAccount(index)} class="invis-button">
                             <h4>
@@ -114,6 +117,10 @@
 </div>
 
 <style lang="scss">
+
+    .accSearchInput {
+        margin-bottom: 25px;
+    }
 
     .account-title {
         font-size: 2em;
