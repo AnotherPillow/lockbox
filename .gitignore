@@ -29,3 +29,5 @@ src/lib/ExampleLogos.svelte
 public/vite.svg
 public/tauri.svg
 public/svelte.svg
+
+*.pdn
