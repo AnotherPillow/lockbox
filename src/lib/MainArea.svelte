@@ -1,7 +1,7 @@
 <script lang="ts">
     import { invoke } from "@tauri-apps/api/tauri"
     import { decrypted, selected_account, stored_key, defaultDecrypted, futureIndex } from "../stores";
-    import { blankAccount, capitalise } from "../util";
+    import { blankAccount, capitalise, randomPassword } from "../util";
     
     let storedKey = ''
     stored_key.subscribe(value => {
@@ -91,6 +91,25 @@
                             placeholder={`Your ${capitalise(key)}...`}
                             bind:value={decryptedData.accounts[selectedAccount][key]}
                         />
+                    {:else if key == 'password'}
+                        <input 
+                            data-account-index={selectedAccount} 
+                            data-account-field={key} 
+                            name={key + '-input'} 
+                            id={key + '-input'}
+                            type="text"
+                            class="account-detail-input password-input"
+                            placeholder={`Your ${capitalise(key)}...`}
+                            bind:value={decryptedData.accounts[selectedAccount][key]}
+                        >
+                        <h3 id="password-shuffle-icon">
+                            <!-- svelte-ignore a11y-click-events-have-key-events -->
+                            <!-- svelte-ignore a11y-no-static-element-interactions -->
+                            <i class="fa-solid fa-shuffle" on:click={() => {
+                                decryptedData.accounts[selectedAccount]['password'] = randomPassword()
+                            }}
+                            ></i>
+                        </h3>
                     {:else} 
                         <input 
                             data-account-index={selectedAccount} 
@@ -179,6 +198,8 @@
 
             .account-details-container {
                 display: flex;
+                position: relative;
+                
                 justify-content: space-between;
                 width: 100%;
                 margin-bottom: 10px; /* Optional spacing between input pairs */
@@ -195,7 +216,25 @@
                 .account-detail-input {
                     text-align: center;
                     flex: 1;
+                    
                 }       
+                
+                #password-shuffle-icon {
+                    z-index: 50;
+                    position: absolute;
+
+                    right: 1.5em;
+                    top: 50%;
+                    transform: translateY(-50%);
+
+                    margin: 0;
+
+                    &:hover {
+                        cursor: pointer;
+                        filter: brightness(0.8);
+                    }
+
+                }
             }
         }
 

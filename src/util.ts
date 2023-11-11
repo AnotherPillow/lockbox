@@ -12,3 +12,14 @@ export const blankAccount = {
     monthOfBirth: 6,
     dayOfBirth: 18,
 }
+
+export const randomPassword = (
+    length = 15,
+    charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!"£$%^&*()-=_+[{]}#~@;:,<.>/?'
+) => {
+    let pwd = ''
+    for (var i = 0, n = charset.length; i < length; ++i) {
+        pwd += charset.charAt(Math.floor(Math.random() * n));
+    }
+    return pwd
+}
