@@ -91,25 +91,6 @@
                             placeholder={`Your ${capitalise(key)}...`}
                             bind:value={decryptedData.accounts[selectedAccount][key]}
                         />
-                    {:else if key == 'password'}
-                        <input 
-                            data-account-index={selectedAccount} 
-                            data-account-field={key} 
-                            name={key + '-input'} 
-                            id={key + '-input'}
-                            type="text"
-                            class="account-detail-input password-input"
-                            placeholder={`Your ${capitalise(key)}...`}
-                            bind:value={decryptedData.accounts[selectedAccount][key]}
-                        >
-                        <h3 id="password-shuffle-icon">
-                            <!-- svelte-ignore a11y-click-events-have-key-events -->
-                            <!-- svelte-ignore a11y-no-static-element-interactions -->
-                            <i class="fa-solid fa-shuffle" on:click={() => {
-                                decryptedData.accounts[selectedAccount]['password'] = randomPassword()
-                            }}
-                            ></i>
-                        </h3>
                     {:else} 
                         <input 
                             data-account-index={selectedAccount} 
@@ -117,10 +98,20 @@
                             name={key + '-input'} 
                             id={key + '-input'}
                             type="text"
-                            class="account-detail-input"
+                            class={`account-detail-input ${key == 'password' ? 'password-input' : ''}`}
                             placeholder={`Your ${capitalise(key)}...`}
                             bind:value={decryptedData.accounts[selectedAccount][key]}
                         />
+                        {#if key == 'password'}
+                            <h3 id="password-shuffle-icon">
+                                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                                <!-- svelte-ignore a11y-no-static-element-interactions -->
+                                <i class="fa-solid fa-shuffle" on:click={() => {
+                                    decryptedData.accounts[selectedAccount]['password'] = randomPassword()
+                                }}
+                                ></i>
+                            </h3>
+                        {/if}
                     {/if}
                 </div>
             {/each}
