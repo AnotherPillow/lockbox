@@ -11,6 +11,7 @@
     import type { accountType } from "../stores"
     
     import { toast } from 'svoast';
+    import { dialogs } from "svelte-dialogs";
     
     let decryptedData = defaultDecrypted
     decrypted.subscribe(value => {
@@ -41,6 +42,25 @@
     }
 
     let accountQuery = ''
+
+    const randomPasswordInputs = [
+        { label: "length", type: "radio", options: [
+            '8',
+            '15',
+            '20',
+            '30',
+        ], required: true },
+        { label: "character set", type: "radio", options: [
+            'a-z, A-Z, 0-9',
+            'a-z, 0-9',
+            `a-z, A-Z, 0-9, !"£$%^&*()-=_+[{]}#~@;:,<.>/?`,
+            'hex',
+        ], required: true },
+    ]
+    const randomPasswordPromptOptions = {
+        title: "Settings for Password Generator"
+    }
+
 </script>
 
 <!--make a grid with 1 small column and 2 big ones-->
@@ -106,8 +126,34 @@
                             <h3 id="password-shuffle-icon">
                                 <!-- svelte-ignore a11y-click-events-have-key-events -->
                                 <!-- svelte-ignore a11y-no-static-element-interactions -->
-                                <i class="fa-solid fa-shuffle" on:click={() => {
-                                    decryptedData.accounts[selectedAccount]['password'] = randomPassword()
+                                <i class="fa-solid fa-shuffle" on:click={async () => {
+                                    const settings = await dialogs.prompt(randomPasswordInputs, randomPasswordPromptOptions)
+
+                                    if (settings[0] == undefined || settings[1] == undefined) return toast.error('You must specify a character set and length!')
+
+                                    let length = parseInt(settings[0])
+                                    let charset = ''
+
+                                    switch (settings[1]) {
+                                        case 'a-z, A-Z, 0-9':
+                                            charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+                                            break
+                                        case 'a-z, 0-9':
+                                            charset = 'abcdefghijklmnopqrstuvwxyz0123456789'
+                                            break
+                                        case `a-z, A-Z, 0-9, !"£$%^&*()-=_+[{]}#~@;:,<.>/?`:
+                                            charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!"£$%^&*()-=_+[{]}#~@;:,<.>/?'
+                                            break
+                                        case 'hex':
+                                            charset = '0123456789ABCDEF'
+                                            break
+                                        default:
+                                            toast.warning(`An unknown error occured creating account with character set <code>${settings[1]}</code>!`)
+                                            return
+                                    }
+
+                                    decryptedData.accounts[selectedAccount]['password'] = randomPassword(length, charset)
+                                    toast.success('Password generated!')
                                 }}
                                 ></i>
                             </h3>

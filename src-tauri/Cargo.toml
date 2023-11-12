@@ -1,6 +1,6 @@
 [package]
 name = "lockbox"
-version = "0.1.0"
+version = "1.1.0"
 description = "A password manager made using Tauri."
 authors = ["anotherpillow"]
 license = ""

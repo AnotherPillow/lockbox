@@ -111,3 +111,16 @@ button {
     top: auto !important;
     bottom: 2em !important;
 }
+
+.dialog__overlay {
+    .dialog__container {
+        &, fieldset, legend, label {
+            background-color: #2b2b2b;
+        }
+
+        label, legend, h1, h2 {
+            color: white;
+        }
+    }
+    
+}
