@@ -31,8 +31,8 @@
   
 <div>
     <form class="row" on:submit|preventDefault={hash}>
-      <input id="hash-input" placeholder="Master Password..." type="password" bind:value={key} />
-      <button id="nav-submit">Submit</button>
+        <input id="hash-input" placeholder="Master Password..." type="password" bind:value={key} />
+        <button id="nav-submit">Submit</button>
     </form>
     <!-- <p>{key}</p> -->
 </div>
@@ -41,6 +41,11 @@
     #hash-input, #nav-submit {
         margin-right: 5px;
         // margin-top: 0.9em; 
+    }
+
+    input {
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
     }
 
     form {
