@@ -2,7 +2,7 @@
     import HashKey from "./HashKey.svelte";
     
     import { invoke } from "@tauri-apps/api/tauri"
-    import { decrypted, selected_account, stored_key, defaultDecrypted } from "../stores";
+    import { decrypted, stored_key, defaultDecrypted } from "../stores";
 
     import { toast } from 'svoast';
 
@@ -55,7 +55,6 @@
             
             padding: 0;
             overflow: hidden;
-            /*background-color: #282828;*/
 
             
 
@@ -66,9 +65,6 @@
         }
 
         li {
-            // &:not([data-hide-bg]) {
-            //     background-color: #242424;
-            // }
             
             flex: 1;
             text-align: center;
