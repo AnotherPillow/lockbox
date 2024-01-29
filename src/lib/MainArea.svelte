@@ -47,14 +47,14 @@
         { label: "length", type: "radio", options: [
             '8',
             '15',
-            '20',
-            '30',
+            '25',
+            '50',
         ], required: true },
         { label: "character set", type: "radio", options: [
             'a-z, A-Z, 0-9',
             'a-z, 0-9',
             `a-z, A-Z, 0-9, !"£$%^&*()-=_+[{]}#~@;:,<.>/?`,
-            'hex',
+            'a-z, A-Z, 0-9, special characters (including almost all not on normal keyboards)',
         ], required: true },
     ]
     const randomPasswordPromptOptions = {
@@ -144,8 +144,8 @@
                                         case `a-z, A-Z, 0-9, !"£$%^&*()-=_+[{]}#~@;:,<.>/?`:
                                             charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!"£$%^&*()-=_+[{]}#~@;:,<.>/?'
                                             break
-                                        case 'hex':
-                                            charset = '0123456789ABCDEF'
+                                        case 'a-z, A-Z, 0-9, special characters (including almost all not on normal keyboards)':
+                                            charset = `abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!"£$%^&*()-=_+[{]}#~@;:,<.>/?®©§¼½¿»±²³ÀÁÂÃÄÅÆÇÈÉËÌÍÎâãÏÐäåÑÒæçÓÔèêÕéÖ×ëìØÙíîÚÛïðÜñÝÞòóßàôõáĉĈćĆąĄăĂāĀÿþýüûúùø÷öĊĞċğĠČčġĢĎĐďģĤĥđĒĦħēĔĨĩĕĖĪīėęĬĘĭĮĚĜİıĝŒœĸķĶĳĲǊǋǌǤǷǶ█░▒▓₡†‡‰₿₽₾₼₻₺₹₸₷₶₵₴₳₲₱₰₯₮₭€₫ꞶꞷꞵꞠꞟꞴꞳꞞꞲꞝꞨꞔꞕꞖꝘꝙ֍`
                                             break
                                         default:
                                             toast.warning(`An unknown error occured creating account with character set <code>${settings[1]}</code>!`)

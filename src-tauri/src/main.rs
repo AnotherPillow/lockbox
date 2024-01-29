@@ -172,7 +172,7 @@ fn main() {
     
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
-            greet,
+            // greet,
             hash_password,
             get_launch_data,
             get_decrypted_data,
